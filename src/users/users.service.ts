@@ -15,18 +15,26 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.userModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: string) {
+    return this.userModel.findById(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(id: string, updateUserDto: UpdateUserDto) {
+    return this.userModel.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: updateUserDto,
+      },
+      {
+        new: true,
+      },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: string) {
+    return this.userModel.deleteOne({ _id: id }).exec();
   }
 }
